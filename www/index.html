@@ -143,8 +143,13 @@
 <div class="side-bars">
     <div id="settings-side-bar" class="settings-side-bar sideBar">
         <ul>
+            <li><h2>Set Search Distance</h2></li>
+            <li data-action="search-distance" data-options="aroundme"><img src="./images/icons/appbar.home.variant.enter.png">around me: 2.5km</li>
+            <li data-action="search-distance" data-options="surrounding"><img src="./images/icons/appbar.home.variant.enter.png">surrounding: 5km</li>
+            <li data-action="search-distance" data-options="townarea"><img src="./images/icons/appbar.home.variant.enter.png">townarea: 10km</li>
+            <li data-action="search-distance" data-options="countrywide"><img src="./images/icons/appbar.home.variant.enter.png">countrywide: 50km</li>
             <li><h2>Fast Options: </h2></li>
-            <li data-action="find-bank" data-options="kigali"><img src="./images/icons/appbar.home.variant.enter.png">Bank of Kigali</li>
+            <li data-action="search-distance" data-options=""><img src="./images/icons/appbar.home.variant.enter.png">Bank of Kigali</li>
             <li data-action="find-kobil" data-options="kobil"><img src="./images/icons/appbar.gas.png"> Kobil Station</li>
             <li data-action="find-airtel" data-options="airtel">
                 <img src="./images/icons/network/appbar.connection.quality.medium.png">Airtel Branches
@@ -272,6 +277,9 @@
             if($(this).data('action')) {
                 var action = $(this).data('action');
                 switch (action) {
+                    case "search-distance":
+                        getMap.setDefaultDistance($(this).data('options'));
+                        break;
                     case "find-bank":
                         getMap.search("bank of kigali", ["bank", "finance"]);
                         break;

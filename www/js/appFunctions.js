@@ -23,12 +23,15 @@ var getMap = {
     options: {},
     dirTo: false, //will contain the place to be directed to onclick
     distance: {
-        "aroundme": 1000,
-        "surrounding": 3000,
+        "aroundme": 2500,
+        "surrounding": 5000,
         "townarea": 10000,
         "countrywide": 50000
     },
-
+    setDefaultDistance: function(option) {
+        getMap.selected.distance = getMap.distance[option];
+        return true;
+    },
     //Geo locate user
     geoLocate: function() {
 
@@ -413,7 +416,7 @@ var getMap = {
                 return el.directions == JSON.stringify(getMap.dirTo.directions);
             })
             //if none, add it
-            if(search.length > 0)
+            if(search.length <= 0)
                 //show the bookmark option if he wants to bookmark the place
                 viewModel.bookmark(true);
         }
