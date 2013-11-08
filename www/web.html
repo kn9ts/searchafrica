@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <meta name="description" content=" "/>
+    <meta name="keywords" content=" "/>
+
+    <title></title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" type="image/png" href=""/>
+    <link rel="shortcut icon" type="image/x-icon" href=""/>
+
+    <link rel="stylesheet" href="./css/general.css"/>
+    <link rel="stylesheet" href="./css/jquery.sidr.dark.css"/>
+
+    <script type="text/javascript" src=""></script>
+    <script type="text/javascript" src="./js/knockout-2.2.1.js"></script>
+    <script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.sidr.min.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdtHFh0x3GpwY3C18Qg5dwmlEb48Ej30w&sensor=false"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+    <script type="text/javascript">
+        var script = '<script type="text/javascript" src="http://google-maps-' +
+                'utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble';
+        if (document.location.search.indexOf('compiled') !== -1) {
+            script += '-compiled';
+        }
+        script += '.js"><' + '/script>';
+        document.write(script);
+    </script>
+</head>
+<body>
+
+<div class="header">
+    <table>
+        <tr>
+            <td><h2>SearchAfrica</h2></td>
+            <td>
+                <div class="icons">
+                    <div><img src="images/icons/appbar.location.circle.png"></div>
+                    <div><img src="images/icons/appbar.information.circle.png"></div>
+                </div>
+            </td>
+            <td><input id="status-search" value="" name="status-search" data-keyword=""></td>
+            <td><img src="images/icons/appbar.magnify.png"></td>
+        </tr>
+    </table>
+</div>
+
+<table class="content">
+    <tr>
+        <td data-options="fast options">
+            <!-------------- THE SIDE BARS ---------------->
+            <div class="side-bars">
+                <div id="settings-side-bar" class="settings-side-bar sideBar">
+                    <ul>
+                        <li><h2>Fast Options: </h2></li>
+                        <li data-action="find-bank" data-options="kigali"><img src="./images/icons/appbar.home.variant.enter.png">Bank of Kigali</li>
+                        <li data-action="find-kobil" data-options="kobil"><img src="./images/icons/appbar.gas.png"> Kobil Station</li>
+                        <li data-action="find-airtel" data-options="airtel">
+                            <img src="./images/icons/network/appbar.connection.quality.medium.png">Airtel Branches
+                        </li>
+                        <li data-action="clear-map">
+                            <img src="./images/icons/appbar.clear.inverse.reflect.horizontal.png"> Clear Map
+                        </li>
+                        <li data-action="cancel"><img src="./images/icons/appbar.close.png">Cancel</li>
+                    </ul>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div id="map-canvas" style="width:640px; height:480px;"></div>
+        </td>
+        <td>
+            <!-- Activity bar -->
+            <div class="status-activity black-bg white padding">
+                <span data-bind="text: placesNo">37</span>
+                <span data-bind="text: placesNo() == 0 ? 'Search for the place you want': 'matching results found.'"></span>
+            </div>
+            <!-- Content wrapper -->
+            <div id="search-wrapper">
+                <div class="scroll">
+                    <!-- ko if: places_list().length > 0 -->
+                    <!-- all search results will be listed here, only show when there is at least one to list -->
+                    <ul id="stuff" data-bind="foreach: places_list">
+                        <li data-bind="attr: {'data-id': id}, click: getMap.getPlace"><!-- the template -->
+                            <h2 data-bind="text: name">Bel Air Bar</h2>
+                            <p data-bind="text: vicinity">Avenue du Commerce, Kigali</p>
+                        </li>
+                    </ul>
+                    <!-- /ko -->
+
+                    <!-- ko if: places_list().length == 0 -->
+                    <div class="no-projects"><!-- Fallback -->
+                        <h2 class="padding">Search for places.</h2>
+                    </div>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

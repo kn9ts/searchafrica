@@ -1,0 +1,146 @@
+/**
+ * CSS STYLING FILE
+ * Created by Eugene Mutai
+ * Date: 7/12/13
+ * Time: 11:59 PM
+ * Description: 
+ */
+
+@font-face {
+	font-family: 'myApplicationFont';
+	src: local('myApplicationFont'), local('myApplicationFont'), url('Roboto-Light.ttf') format('truetype');
+}
+
+body{min-width: 320px; margin: auto; background-color: white; overflow-x: hidden;}
+body, html{font-family:"myApplicationFont", cursive, sans-serif; font-size: 15px; font-weight: 500}
+a{text-decoration: none; cursor: pointer; display: block;}
+
+/******* Colors *******/
+.red{color: #e74c3c}
+.orange{color: #f39c12}
+.green{color: #3ce234}
+.yellow{color: #f1c40f}
+.blue{color: #3498DB}
+.white{color: #fefefe}
+.grey{color: #bdc3c7}
+.black{color: #000000}
+
+/****** Background colors *************/
+.red-bg{background: #e74c3c}
+.orange-bg{background: #f39c12}
+.green-bg{background: #3ce234}
+.yellow-bg{background: #f1c40f}
+.blue-bg{background: #3498DB}
+.grey-bg{background: #525252}
+.pale-red{background: #fbb475}  /* #ff8f7f */
+.black-bg{background: #000000}
+.purple-bg{background-color: #8e44ad}
+
+/********* OTHER DEFAULTS ******/
+.line{position: fixed; top: 0; left: 0; height: 100%}
+.line img{height: 100%}
+.space{margin-top: 10%}
+.content{width: 80%; margin:auto}
+
+.left{float: left}
+.right{float: right}
+.padding{padding: 10px}
+.small-padding{padding: 5px}
+.faded{opacity: 0.4}
+.largetext{font-size: 1.5em; padding: 0; margin: 0}
+.br{margin: 15px}
+.clear{clear: both;}
+.span{width: 100px}
+.span-1{width: 200px}
+.span-2{width: 300px}
+.span-3{width: 400px}
+.span-4{width: 100%}
+.uppercase{text-transform: uppercase}
+
+.border{border-width: 3px; border-style: solid; border-radius: 10px}
+.curves{border-radius: 5px}
+.link{ cursor: pointer;}
+.hide{display: none}
+
+.normal{font-weight: normal}
+.paddingmargin{padding: 0; margin: 0}
+
+/****** RELATED positioning of these elements */
+.header-bar, .overlay{position: fixed; right: 0;}
+.header-bar, .status-search{max-width: 30em}
+
+/******* THIS IS THE HEADER **************/
+.header-bar{width: 100%; background: #cc0000; position: absolute; z-index: 2;}
+.header-bar div{float: left; width: 100%}
+
+.header a{width: 20%; text-align: center; float: left}
+.header a, header h3{color: #fefefe;}
+.header a img{width: 55%; max-width: 75px}
+.header a:active, .direction-btn button:active{background:#e74c3c}
+
+.activity-bar{text-align: center; padding: 2% 0; display: block}
+.pointer{
+	font-size: 1em; color: white;
+	width: 100%; height: auto;
+	font-weight: bold; text-align: center;
+}
+
+.direction-btn{position: fixed; bottom: 4%; left: 25%; width: 50%; z-index: 5; color: #ffffff; text-align: center}
+.direction-btn > div{float: left; width: 25%; padding: 2% 0; cursor: pointer; font-weight: bold}
+.direction-btn > div:first-child{width: 50%; background: #000000}
+
+/**** SINGLE STATUS PAGE ****/
+.status-pop-up{position: fixed; top: 25%; z-index: 8; background: #fefefe; width: 95%; left: 2.5%; opacity: 1.0; display: none}
+.status-pop-up > div{float: left; width: 100%}
+.status-pop-up > div > div{float: left; cursor: pointer}
+
+div.back-btn, div.close-btn{width: 15%}
+div.spacer{width: 70%}
+.pop-header > div > img{width: 100%}
+.pop-header > div:active{background: #e74c3c}
+
+.text-area{background-color: #F9FFD0;}
+.text-area div{width: 98%; margin: auto}
+.text-area > div{width: 90%; margin: 2% 2%; padding: 3%; color: #262626; font-size: 1.5em; text-align: center; border: 1px solid #dddddd; background: #fefefe; font-weight: 400}
+.text-area div span, b{color: #cc0000}
+
+.share-like{background: #fffdc7; color: #fefefe; font-size: 1.4em}
+.share-like > div{width: 50%; text-align: center; cursor: pointer}
+.share-like > div > img{width: 30%; vertical-align: middle}
+
+/******* SIDE MENU ************/
+.sidr{font-family: "myApplicationFont"; font-weight: normal}
+.sideBar ul li{list-style-type: none; text-align: left; font-weight: bold; width: 100%; cursor: pointer}
+.sideBar ul li img{vertical-align: middle; width: 25%;}
+.sideBar ul li:active{color:  #fffdc7;}
+.sideBar ul li h2{font-size: 1em; padding: 1%; font-weight: bold; text-align: justify;}
+
+/***************** PLACES SEARCH *************/
+.overlay{top: 0; left: 0; width: 100%; height: 100%; z-index: 4; background: #000000; opacity: 0.8}
+.status-search{position: fixed; right: 2.5%; width: 95%; z-index: 10; height: 95%; top: 2.5%; background: #fefefe;}
+.overlay, .status-search{display: none}
+
+.status-search table{width: 100%;}
+.status-search table td{width: 15%}
+.status-search table td.spacer{width: 70%}
+.status-search table td img{width: 100%}
+.status-search table td:active{background: #e74c3c;}
+
+.status-search .spacer input{
+	color: #fefefe; background: #3ce234; border: none;
+	border-bottom: 1px solid #fefefe; width: 100%;
+	font-family: "myApplicationFont"; font-size: 1.5em; font-weight: bold;
+	overflow: hidden; padding: 3% 0;
+}
+#search-wrapper{position: relative; top: 1%; left: 0; overflow:auto; opacity: 1; width: 100%; height: 82%;}
+
+/******************* STYLING OF PLACES FOUND *****************/
+ul#stuff{padding: 0; margin: 0; width: 100%;}
+ul#stuff li{width: 92%; padding: 2%; margin: 3% 2%; list-style-type: none; background: #fefefe; border: 1px solid #bbbbb6; font-size: 1.3em; text-align: left}
+ul#stuff li:hover{background: #fffdc7}
+ul#stuff li h2, ul#stuff li p{padding: 0; margin: 0; font-size: 1em;}
+
+.no-projects{width: 100%}
+.no-projects h2{text-align: center; color: grey;}
+
+.status-activity{text-align: center}

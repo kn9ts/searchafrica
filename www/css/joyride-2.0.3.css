@@ -1,0 +1,234 @@
+/* Artfully masterminded by ZURB */
+body {
+  position: relative;
+}
+
+#joyRideTipContent { display: none; }
+
+.joyRideTipContent { display: none; }
+
+/* Default styles for the container */
+.joyride-tip-guide {
+  position: absolute;
+  background:#fefefe;
+  display: none;
+  color: #262626;
+  width: 95%;
+  max-width: 20em; /* add max width */
+  z-index: 6;
+  top: 0; /* keeps the page from scrolling when calculating position */
+  left: 2.5%;
+  font-family: "myApplicationFont";
+  font-weight: normal;
+  font-size: 1.5em;
+}
+
+.joyride-content-wrapper {
+  width: 90%;
+  padding: 5% 4%;
+}
+
+.joyride-tip-guide span{color: #3ce234}
+
+/* Add a little css triangle pip, older browser just miss out on the fanciness of it */
+.joyride-tip-guide span.joyride-nub {
+  display: block;
+  position: absolute;
+  left: 22px;
+  width: 0;
+  height: 0;
+  border: solid 14px;
+  border: solid 14px;
+}
+
+.joyride-tip-guide span.joyride-nub.top {
+  /*
+  IE7/IE8 Don't support rgba so we set the fallback
+  border color here. However, IE7/IE8 are also buggy
+  in that the fallback color doesn't work for
+  border-bottom-color so here we set the border-color
+  and override the top,left,right colors below.
+  */
+  border-color: #fefefe;
+  border-top-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  top: -28px;
+  bottom: none;
+}
+
+.joyride-tip-guide span.joyride-nub.bottom {
+  /*
+  IE7/IE8 Don't support rgba so we set the fallback
+  border color here. However, IE7/IE8 are also buggy
+  in that the fallback color doesn't work for
+  border-top-color so here we set the border-color
+  and override the bottom,left,right colors below.
+  */
+  border-color: #fefefe !important;
+  border-bottom-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  bottom: -28px;
+  bottom: none;
+}
+
+.joyride-tip-guide span.joyride-nub.right {
+  border-color: #fefefe !important;
+  border-top-color: transparent !important;
+  border-right-color: transparent !important;
+  border-bottom-color: transparent !important;
+  top: 22px;
+  bottom: none;
+  left: auto;
+  right: -28px;
+}
+
+.joyride-tip-guide span.joyride-nub.left {
+  border-color: #fefefe !important;
+  border-top-color: transparent !important;
+  border-left-color: transparent !important;
+  border-bottom-color: transparent !important;
+  top: 22px;
+  left: -28px;
+  right: auto;
+  bottom: none;
+}
+
+.joyride-tip-guide span.joyride-nub.top-right {
+  border-color: #fefefe;
+  border-top-color: transparent !important;
+  border-left-color: transparent !important;
+  border-right-color: transparent !important;
+  top: -28px;
+  bottom: none;
+  left: auto;
+  right: 28px;
+}
+
+/* Typography */
+.joyride-tip-guide h1,.joyride-tip-guide h2,.joyride-tip-guide h3,.joyride-tip-guide h4,.joyride-tip-guide h5,.joyride-tip-guide h6 {
+  line-height: 1.25;
+  margin: 0;
+  font-weight: bold;
+  color: #3ce234;
+}
+.joyride-tip-guide h1, h2, h3 { font-size: 1.3em}
+.joyride-tip-guide p {
+  margin: 0 0 18px 0;
+  font-size: 14px;
+  line-height: 18px;
+}
+.joyride-tip-guide a {
+  color: #3ce234;
+  text-decoration: none;
+  border-bottom: dotted 1px #777;
+}
+.joyride-tip-guide a:hover {
+  color: #fefefe;
+  border-bottom: none;
+}
+
+/* Button Style */
+.joyride-tip-guide .joyride-next-tip {
+  width: auto;
+  padding: 3%;
+  margin: 2% 0%%;
+  font-size: 1em;
+  text-align: center;
+  text-decoration: none;
+  color: #FEFEFE;
+  border: solid 1px #2eac28;
+	background: #3ce234; /* Old browsers */
+	background: -moz-linear-gradient(top,  #3ce234 0%, #03f900 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3ce234), color-stop(100%,#03f900)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #3ce234 0%,#03f900 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #3ce234 0%,#03f900 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #3ce234 0%,#03f900 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #3ce234 0%,#03f900 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3ce234', endColorstr='#03f900',GradientType=0 ); /* IE6-9 */
+	text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+}
+
+.joyride-next-tip:active {
+    color: #fefefe !important;
+    border: solid 1px #aa0000;
+    background: #ee0000; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ee0000 0%, #d10e0e 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ee0000), color-stop(100%,#d10e0e)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ee0000 0%,#d10e0e 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ee0000 0%,#d10e0e 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ee0000 0%,#d10e0e 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ee0000 0%,#d10e0e 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ee0000', endColorstr='#d10e0e',GradientType=0 ); /* IE6-9 */
+}
+
+.joyride-timer-indicator-wrap {
+  width: 50px;
+  height: 3px;
+  border: solid 1px #fefefe;
+  position: absolute;
+  right: 17px;
+  bottom: 16px;
+}
+.joyride-timer-indicator {
+  display: block;
+  width: 0;
+  height: inherit;
+  background:#fefefe;
+}
+
+.joyride-close-tip {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #666666 !important;
+  text-decoration: none;
+  font-family: Verdana, sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  border-bottom: none !important;
+  font-size: 1em;
+}
+
+.joyride-close-tip img{width: 32px;}
+
+.joyride-close-tip:hover {
+  color: #000000 !important;
+}
+
+.joyride-modal-bg {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: #000000;
+  background: transparent;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+  z-index: 4;
+  display: none;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.joyride-expose-wrapper {
+    background: none;
+    position: absolute;
+    z-index: 6;
+    -moz-box-shadow: 0px 0px 30px #fefefe;
+    -webkit-box-shadow: 0px 0px 30px #fefefe;
+    box-shadow: 0px 0px 30px #fefefe;
+}
+
+.joyride-expose-cover {
+    background: none;
+    position: absolute;
+    z-index: 6;
+    top: 0px;
+    left: 0px;
+}

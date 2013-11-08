@@ -1,0 +1,440 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <meta name="description" content=" "/>
+    <meta name="keywords" content=" "/>
+
+    <title></title>
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" type="image/png" href=""/>
+    <link rel="shortcut icon" type="image/x-icon" href=""/>
+
+    <!-- Stylesheeyts -->
+    <link rel="stylesheet" href="./css/general.css"/>
+    <link rel="stylesheet" href="./css/jquery.sidr.dark.css"/>
+    <link rel="stylesheet" href="./css/joyride-2.0.3.css"/>
+
+    <!-- Dependencies -->
+    <!-- // <script type="text/javascript" src="cordova.js"></script> -->
+    <!-- // <script type="text/javascript" src="./js/cordova.min.js"></script> -->
+
+    <script type="text/javascript" src="./js/knockout-2.2.1.js"></script>
+    <script type="text/javascript" src="./js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="./js/jquery.sidr.min.js"></script>
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdtHFh0x3GpwY3C18Qg5dwmlEb48Ej30w&libraries=places&sensor=false"></script>
+    <!-- // <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script> -->
+    <script type="text/javascript">
+        var script = '<script type="text/javascript" src="http://google-maps-' +
+                'utility-library-v3.googlecode.com/svn/trunk/infobubble/src/infobubble';
+        if (document.location.search.indexOf('compiled') !== -1) {
+            script += '-compiled';
+        }
+        script += '.js"><' + '/script>';
+        document.write(script);
+    </script>
+</head>
+<body id="content-wrapper">
+
+<div class="header-bar" id="app-navigation" data-style="display: none">
+
+    <!-- app's default navigation -->
+    <div class="header green-bg">
+        <a data-load="app-menu" id="app-menu">
+            <img src="./images/icons/appbar.lines.horizontal.4.png">
+        </a>
+        <a data-load="search" id="app-search">
+            <img src="./images/icons/appbar.magnify.png">
+        </a>
+        <a data-load="geolocation" id="app-my-location">
+            <img src="./images/icons/appbar.location.circle.png">
+        </a>
+        <a data-load="clear-map" id="app-clear-map">
+            <img src="./images/icons/appbar.location.minus.png">
+        </a>
+        <a data-load="info" id="app-info">
+            <img src="./images/icons/appbar.information.circle.png">
+        </a>
+    </div>
+
+    <!-- refreshing/loading bar indicator -->
+    <div class="activity-bar black-bg white">
+        <div class="indicate-activity" data-bind="text: activitybar">SearchAfrica: Feel at home.</div>
+    </div>
+</div>
+
+<!-- directional button -->
+<div class="direction-btn" data-bind="visible: bookmark() ? bookmark(): getdirections(), attr: {'data-option': bookmark() ? 'bookmark': 'directions'}">
+    <div data-action="none" data-bind="text: bookmark() ? 'bookmark place': 'get directions'"></div>
+    <div class="green-bg" data-action="true">YES</div>
+    <div class="red-bg" data-action="false">NO</div>
+</div>
+
+<!-- MODAL INTERGRATION: copied from statusshare -->
+<div class="overlay"></div>
+<div data-action="status-search" class="status-search pop-up">
+    <!-- the search bar -->
+    <table class="search-bar green-bg" id="app-search-bar">
+        <tr>
+            <td data-action="status-search" class="close"><img src="images/icons/appbar.close.png"></td>
+            <td data-action="none" class="spacer">
+                <input id="status-search" value="" name="status-search" data-keyword="">
+            </td>
+            <td data-action="search"><img src="images/icons/appbar.magnify.png"></td>
+        </tr>
+    </table>
+    <!-- Activity bar -->
+    <div class="status-activity black-bg white padding">
+        <span data-bind="text: placesNo">37</span>
+        <span data-bind="text: placesNo() == 0 ? placeHolder: 'matching results found.'"></span>
+    </div>
+    <!-- Content wrapper -->
+    <div id="search-wrapper">
+        <div class="scroll">
+            <!-- ko if: places_list().length > 0 -->
+            <!-- all search results will be listed here, only show when there is at least one to list -->
+            <ul id="stuff" data-bind="foreach: places_list"><!-- the template -->
+                <li data-bind="attr: {'data-id': id, 'data-loc': location}, click: getMap.getPlace">
+                    <h2 data-bind="text: name">Bel Air Bar</h2>
+                    <p data-bind="text: vicinity">Avenue du Commerce, Kigali</p>
+                </li>
+            </ul>
+            <!-- /ko -->
+
+            <!-- ko if: places_list().length == 0 -->
+            <div class="no-projects"><!-- Fallback -->
+                <h2 class="padding">Search for places.</h2>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+</div>
+
+<!-- overlay shadow -->
+<div class="status-pop-up" data-status-id="898" data-status="the status update">
+    <div class="pop-header green-bg white">
+        <div data-action="back" class="back-btn">
+            <img src="./images/icons/appbar.chevron.left.png">
+        </div>
+        <div data-action="" class="spacer">&nbsp;</div>
+        <div data-action="back" class="close-btn">
+            <img src="images/icons/appbar.close.png">
+        </div>
+    </div>
+    <div class="text-area">
+        <div>Are you <b>walking</b> or <b>driving</b>?</div>
+    </div>
+    <div class="share-like">
+        <div data-action="walking" class="blue-bg white like">
+            <img src="images/icons/appbar.close.png"> Walking
+        </div>
+        <div data-action="driving" id="share" class="green-bg white share">
+            <img src="images/icons/appbar.check.png"> Driving
+        </div>
+    </div>
+</div>
+
+<!-------------- THE SIDE BARS ---------------->
+<div class="side-bars">
+    <div id="settings-side-bar" class="settings-side-bar sideBar">
+        <ul>
+            <li><h2>Fast Options: </h2></li>
+            <li data-action="find-bank" data-options="kigali"><img src="./images/icons/appbar.home.variant.enter.png">Bank of Kigali</li>
+            <li data-action="find-kobil" data-options="kobil"><img src="./images/icons/appbar.gas.png"> Kobil Station</li>
+            <li data-action="find-airtel" data-options="airtel">
+                <img src="./images/icons/network/appbar.connection.quality.medium.png">Airtel Branches
+            </li>
+            <li data-action="clear-map">
+                <img src="./images/icons/appbar.clear.inverse.reflect.horizontal.png"> Clear Map
+            </li>
+            <li data-action="how-to-use">
+                <img src="./images/icons/appbar.information.circle.png"> How to Use
+            </li>
+            <li data-action="cancel"><img src="./images/icons/appbar.close.png">Cancel</li>
+        </ul>
+    </div>
+
+    <div id="bookmarks-side-bar" class="settings-side-bar bookmarks-side-bar sideBar">
+        <h2>Bookmarks</h2>
+        <!-- ko if: bookmark_list().length > 0 -->
+        <!-- all search results will be listed here, only show when there is at least one to list -->
+        <ul id="bookmarks" data-bind="foreach: bookmark_list">
+            <li data-bind="attr: {'data-name': place, 'data-location': directions}, text: place, click: $root.loadBookmark"></li>
+        </ul>
+        <!-- /ko -->
+
+        <!-- ko if: bookmark_list().length == 0 -->
+        <ul><li data-name="false">No bookmarks set</li></ul>
+        <!-- /ko -->
+    </div>
+</div>
+
+<!-- Diplsay of the MAP -->
+<div id="map-canvas" style="width:320px; height:480px;"></div>
+
+<!---------- THE USER GUIDE TO THE APPLICATION -------------->
+<ol id="joyRide" style="display: none">
+    <li>
+        <h2>Seat down and have some tea!</h2>
+        <div>Welcome to SearchAfrica, where you can search Africa easily and comfortably from anywhere.</div>
+    </li>
+    <li>
+        <h2>Your Location</h2>
+        <div>We've been able to locate you. You are somewhere around <span class="myLoc">here</span>. We will help you get <span class="ftcounter">places</span> around you fast and easily.</div>
+    </li>
+    <li data-id="app-navigation">
+        <h2>Navigation.</h2>
+        <div>Here is everything you will need: bread, peanut butter, spread and sugar respectively.</div>
+    </li>
+    <li data-show="app-menu">
+        <h2>Menu</h2>
+        <div>Click to get sponsored places around you. These are Bank of Kigali, Kobil Gas Stations and Airtel Branches. Also you can access these instructions again here if you ever need refreshing of how to use SearchAfrica.</div>
+    </li>
+    <li data-show="app-search">
+        <h2>Search Africa</h2>
+        <div>Want to search for a specific place, CLICK the search icon above to be able to search for it.</div>
+    </li>
+    <li data-show="app-my-location">
+        <h2>Restore Your Position</h2>
+        <div>If you wander far away from where you are in the MAP as you explore, you can always get back to where you are by CLICKING this.</div>
+    </li>
+    <li data-show="app-clear-map">
+        <h2>Clear Markers</h2>
+        <div>Use this to clear the MAP of any added markers that you used for guidance.</div>
+    </li>
+    <li data-button="That's all folks">
+        <h2>Search Africa</h2>
+        <div>Thank you for using the app, have fun finding places. Do be carefull too.</div>
+    </li>
+</ol>
+
+<!-- Running scripts -->
+<script type="text/javascript" src="./js/jquery.joyride-2.0.3.js"></script>
+<script type="text/javascript" src="./js/joyride.override.js"></script>
+<script type="text/javascript" src="./js/appFunctions.js"></script>
+<script type="text/javascript">
+    //Knockout initialisation
+    var viewModel = {
+        placesNo: ko.observable(''),
+        placeHolder: ko.observable('Search for the place you want'),
+        places_list: ko.observableArray([
+            /*{
+                name: "Greenspan Mall",
+                vicinity: "Donholm, Phase 5, Nairobi Area",
+                id: "HsjhsajhhjHSJAHJgdbasgjhJAHGSJ",
+                location: JSON.stringify({lat: -1.1221, long: 31.762716})
+            }*/
+        ]),
+        bookmark_list: ko.observableArray([
+                /*{
+                    place: "Greenspan Mall",
+                    directions: JSON.stringify({js: -1, kb: 36})
+                }*/
+        ]),
+        getdirections: ko.observable(false),
+        bookmark: ko.observable(false),
+        activitybar: ko.observable(''),
+        loadBookmark: function(obj, event) {
+            //now load this bookmarked place
+            // getMap.getDirections(obj.directions);
+            // console.log(obj)
+        }
+    }
+    //KnockOut JS binding
+    ko.applyBindings(viewModel);
+    viewModel.bookmark_list(getMap.bookMark());
+
+    $(onDeviceReady) //for testing purposes without cordova
+
+    //check when App is fully initiated
+    document.addEventListener("deviceready", onDeviceReady, false);
+    //when everything in  cordova is ready
+    function onDeviceReady() {
+        $.support.cors = true;
+
+        //Resize it to the user's screen size
+        $('#map-canvas').css("width", function() {
+            $(this).height(window.innerHeight)
+            return $(window).width();
+            /*
+             $(this).height($(window).height() < 480 ? $(window).height(): 480);
+             return $(window).width() > 640 ? $(window).width(): 640;
+             */
+        });
+
+        //settings side bar
+        $('#settings-side-bar').on('click', 'li', function() {
+            if($(this).data('action')) {
+                var action = $(this).data('action');
+                switch (action) {
+                    case "find-bank":
+                        getMap.search("bank of kigali", ["bank", "finance"]);
+                        break;
+                    case "find-kobil":
+                        getMap.search("kobil", ["gas_station"]);
+                        break;
+                    case "find-airtel":
+                        getMap.search("airtel");
+                        break;
+                    case "clear-map":
+                        getMap.clearAll();
+                        break;
+                    case "how-to-use":
+                        $(window).joyride("restart");
+                        break;
+                    case "cancel":
+                        //do nothing, let $.sidr() just close
+                        break;
+                }
+            }
+            menu = false; //reset the menu button
+        }).sidr({
+                    name: "settings-side-bar",
+                    source: ".settings-side-bar",
+                    side: "left",
+                    body: $(window).width() < $(window).height() ? '.header-bar': ''
+                });
+
+        //Instanstiate the bookmark sidebar, and event function
+        $('.bookmarks-side-bar').on('click', 'li', function() {
+            console.log(this);
+            var bookmarkObject = {
+                location: JSON.stringify($(this).data('location')), 
+                name: $(this).data('name')
+            }
+            getMap.getPlace(bookmarkObject); //Show the place
+            viewModel.bookmark(false);
+        }).sidr({
+                    name: "bookmarks-side-bar",
+                    source: ".bookmarks-side-bar",
+                    side: "right",
+                    body: $(window).width() < $(window).height() ? '.header-bar': ''
+                });
+
+        var menu = false;
+        $('.header').on('click', 'a', function(event) {
+            event.preventDefault();
+            //what action request
+            var action = $(this).data('load');
+
+            //If it is not a cancel action
+            if(action.indexOf('cancel') == -1) {
+                switch (action) {
+                    case "app-menu":
+                        if(menu) $.sidr('close', 'settings-side-bar'), menu = false;
+                        else $.sidr('open', 'settings-side-bar'), menu = true;
+                        break;
+                    case "search":
+                        $('.overlay').fadeIn(function() {
+                            $('.status-search').show(300)
+                        });
+                        break;
+                    case "geolocation":
+                        getMap.backToPointX();
+                        break;
+                    case "clear-markers":
+                        getMap.backToPointX(true /* will clear all on map*/);
+                        break;
+                    case "info":
+                        if(menu) $.sidr('close', 'bookmarks-side-bar'), menu = false;
+                        else $.sidr('open', 'bookmarks-side-bar'), menu = true;
+                        break;
+                }
+            }else{
+                //do nothing, let the side bar close automatically
+            }
+        })
+
+        //pop up close button
+        $('.close').click(function() {
+            $('.pop-up').hide(300, function() {
+                $('.overlay').fadeOut()
+            })
+        });
+
+        //Search button on pop up
+        $('td[data-action="search"]').click(function() {
+            var val = $('input#status-search').val();
+            if(val.length > 1) { //if the user has entered anything above two letters
+                //build the query
+                var request = {
+                    location: getMap.options.center,
+                    //radius: 50000, //50 km radius.
+                    keyword: val
+                    ,rankBy: google.maps.places.RankBy.DISTANCE
+                }
+                searchArray = placesArray = []; //empty the search & places array
+                //initialise the textSearch.
+                var service = new google.maps.places.PlacesService(map);
+                service.nearbySearch(request, getMap.searchResults);
+            }
+        })
+
+        //does the user want directions option
+        $('.direction-btn, .bookmark').on('click', 'div', function() {
+            var action = $(this).data('action'), option = $(this).parent().data('option');
+            var ifBookmark = viewModel.bookmark(); //option == 'bookmark' ? true: false;
+            console.log("Get dir options", action, option, ifBookmark)
+            switch (action) {
+                case "none":
+                    //do nothing
+                    break;
+                case true:
+                    if(ifBookmark) {
+                        if(getMap.dirTo) getMap.bookMark(getMap.dirTo);
+                    }else{
+                        $('.overlay, .status-pop-up').show(400);
+                    }
+                    break;
+                case false:
+                    if(ifBookmark) viewModel.bookmark(false); else viewModel.getdirections(false);
+                    break;
+            }
+        })
+
+        // Ask him if he is walking or driving -- in .status-pop-up modal
+        $('.share-like').on('click', 'div', function() {
+            var action = $(this).data('action');
+            console.log("he/she is " + action);
+            if(action) { //he or she is
+                getMap.selected.status = getMap.status[action];
+                if(getMap.dirTo) getMap.getDirections(getMap.dirTo.directions);
+                $(this).parent().parent().hide(400).siblings(".overlay").hide(400);
+            }
+        })
+
+        //If the App has finished loading up the assets
+        $(window).on('load', function() {
+            //Initialise joyRide -- then remember it if user has used app before.
+            joyRide.startJourney("#joyRide");
+            getMap.bookMark(); //list the bookmarks
+            var GoogleMapsLoaded = setInterval(function() {
+                if(google) {
+                    //Wait for the script to load then initialise GOOGLE MAPS
+                    google.maps.event.addDomListener(this, 'load', getMap.initMap());
+                    clearInterval(GoogleMapsLoaded);
+                    console.log("Map's API was loaded.")
+                }
+            }, 500);
+
+            //Styling options
+            if($(window).width() > $('.header-bar').width()) {
+                $(".header-bar").css('right', '2.5%');
+            }
+
+            $('.direction-btn button').css('margin-left', function() {
+                var space = $(this).parent().width() - $(this).width();
+                return space/2;
+            })
+        });
+
+    }
+</script>
+
+</body>
+</html>
